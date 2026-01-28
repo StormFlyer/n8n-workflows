@@ -69,10 +69,10 @@ services:
   # ---------------------------------------------------------------------------
   # ComfyUI - AI Image/Video Generation
   # ---------------------------------------------------------------------------
-  # Note: Using a well-maintained community image
+  # Using a well-maintained community image
   # GPU support requires NVIDIA Container Toolkit
   comfyui:
-    image: yanwk/comfyui-boot:latest
+    image: frdel/comfyui-docker:latest
     container_name: ai-stack-comfyui
     ports:
       - "8188:8188"
@@ -80,13 +80,13 @@ services:
       - CLI_ARGS=--listen 0.0.0.0 --port 8188
     volumes:
       # Model storage (checkpoints, loras, etc.)
-      - ./shared/comfyui/models:/root/ComfyUI/models
+      - ./shared/comfyui/models:/comfyui/models
       # Output directory
-      - ./shared/comfyui/output:/root/ComfyUI/output
+      - ./shared/comfyui/output:/comfyui/output
       # Input directory
-      - ./shared/comfyui/input:/root/ComfyUI/input
+      - ./shared/comfyui/input:/comfyui/input
       # Custom nodes
-      - ./shared/comfyui/custom_nodes:/root/ComfyUI/custom_nodes
+      - ./shared/comfyui/custom_nodes:/comfyui/custom_nodes
     networks:
       - ai-stack-network
     # GPU support - requires NVIDIA Container Toolkit
@@ -109,17 +109,17 @@ services:
   # ComfyUI CPU-only variant (uncomment if no GPU available)
   # ---------------------------------------------------------------------------
   # comfyui-cpu:
-  #   image: yanwk/comfyui-boot:latest
+  #   image: frdel/comfyui-docker:latest
   #   container_name: ai-stack-comfyui-cpu
   #   ports:
   #     - "8188:8188"
   #   environment:
   #     - CLI_ARGS=--listen 0.0.0.0 --port 8188 --cpu
   #   volumes:
-  #     - ./shared/comfyui/models:/root/ComfyUI/models
-  #     - ./shared/comfyui/output:/root/ComfyUI/output
-  #     - ./shared/comfyui/input:/root/ComfyUI/input
-  #     - ./shared/comfyui/custom_nodes:/root/ComfyUI/custom_nodes
+  #     - ./shared/comfyui/models:/comfyui/models
+  #     - ./shared/comfyui/output:/comfyui/output
+  #     - ./shared/comfyui/input:/comfyui/input
+  #     - ./shared/comfyui/custom_nodes:/comfyui/custom_nodes
   #   networks:
   #     - ai-stack-network
   #   restart: unless-stopped
